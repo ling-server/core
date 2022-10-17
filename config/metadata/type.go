@@ -6,8 +6,6 @@ import (
 	"math"
 	"strconv"
 	"strings"
-
-	"github.com/ling-server/sso/env"
 )
 
 // Type - Use this interface to define and encapsulate the behavior of validation and transformation
@@ -42,19 +40,6 @@ func (t *NonEmptyStringType) validate(str string) error {
 	return nil
 }
 
-// AuthModeType ...
-type AuthModeType struct {
-	StringType
-}
-
-func (t *AuthModeType) validate(str string) error {
-	if str == env.LDAPAuth || str == env.DBAuth || str == env.UAAAuth || str == env.HTTPAuth || str == env.OIDCAuth {
-		return nil
-	}
-	return fmt.Errorf("invalid %s, shoud be one of %s, %s, %s, %s, %s",
-		env.AUTHMode, env.DBAuth, env.LDAPAuth, env.UAAAuth, env.HTTPAuth, env.OIDCAuth)
-}
-
 // IntType ..
 type IntType struct {
 }
@@ -87,22 +72,6 @@ func (t *PortType) validate(str string) error {
 	}
 
 	return err
-}
-
-// LdapScopeType - The LDAP scope is a int type, but its is limit to 0, 1, 2
-type LdapScopeType struct {
-	IntType
-}
-
-// validate - Verify the range is limited
-func (t *LdapScopeType) validate(str string) error {
-	if str == "0" || str == "1" || str == "2" {
-		return nil
-	}
-	return fmt.Errorf("invalid scope, should be %d, %d or %d",
-		env.LDAPScopeBase,
-		env.LDAPScopeOnelevel,
-		env.LDAPScopeSubtree)
 }
 
 // Int64Type ...
