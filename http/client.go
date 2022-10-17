@@ -5,12 +5,12 @@ import (
 	"encoding/json"
 	"errors"
 	"io"
-	"io/ioutil"
 	"net/http"
 	"net/url"
 	"reflect"
 
 	"github.com/ling-server/core/http/modifier"
+	"github.com/ling-server/core/urllib"
 )
 
 // Client is a util for common HTTP operations, such Get, Head, Post, Put and Delete.
@@ -145,7 +145,7 @@ func (c *Client) do(req *http.Request) ([]byte, error) {
 	}
 	defer resp.Body.Close()
 
-	data, err := ioutil.ReadAll(resp.Body)
+	data, err := io.ReadAll(resp.Body)
 	if err != nil {
 		return nil, err
 	}
@@ -187,7 +187,7 @@ func (c *Client) GetAndIteratePagination(endpoint string, v interface{}) error {
 		if err != nil {
 			return err
 		}
-		data, err := ioutil.ReadAll(resp.Body)
+		data, err := io.ReadAll(resp.Body)
 		resp.Body.Close()
 		if err != nil {
 			return err
@@ -206,7 +206,7 @@ func (c *Client) GetAndIteratePagination(endpoint string, v interface{}) error {
 		resources = reflect.AppendSlice(resources, reflect.Indirect(res))
 
 		endpoint = ""
-		links := lib.ParseLinks(resp.Header.Get("Link"))
+		links := urllib.ParseLinks(resp.Header.Get("Link"))
 		for _, link := range links {
 			if link.Rel == "next" {
 				endpoint = url.Scheme + "://" + url.Host + link.URL
