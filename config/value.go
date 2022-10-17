@@ -1,4 +1,4 @@
-package metadata
+package config
 
 import (
 	"github.com/ling-server/core/errors"

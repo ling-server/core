@@ -5,7 +5,6 @@ import (
 	"errors"
 	"sync"
 
-	"github.com/ling-server/core/config/metadata"
 	"github.com/ling-server/core/log"
 	"github.com/ling-server/core/orm"
 )
@@ -24,7 +23,7 @@ type Manager interface {
 	Load(ctx context.Context) error
 	Set(ctx context.Context, key string, value interface{})
 	Save(ctx context.Context) error
-	Get(ctx context.Context, key string) *metadata.ConfigureValue
+	Get(ctx context.Context, key string) *ConfigureValue
 	UpdateConfig(ctx context.Context, cfgs map[string]interface{}) error
 	GetUserConfigs(ctx context.Context) map[string]interface{}
 	ValidateConfig(ctx context.Context, cfgs map[string]interface{}) error
