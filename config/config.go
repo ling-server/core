@@ -6,7 +6,6 @@ import (
 	"sync"
 
 	"github.com/ling-server/core/log"
-	"github.com/ling-server/core/orm"
 )
 
 var (
@@ -64,8 +63,4 @@ func GetConfigManager(ctx context.Context) Manager {
 
 func Load(ctx context.Context) error {
 	return DefaultManager().Load(ctx)
-}
-
-func Upload(cfg map[string]interface{}) error {
-	return DefaultManager().UpdateConfig(orm.Context(), cfg)
 }
